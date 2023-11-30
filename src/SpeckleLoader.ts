@@ -10,7 +10,7 @@ import * as THREE from "three";
 const eg_url = 'http://dpa-compute1.dpa.com.sg/streams/50bb061b20/objects/1507654f33b5d01c526e64f9eea93856';
 const eg_stream = 'http://dpa-compute1.dpa.com.sg/streams/50bb061b20/commits/f507b65802';
 
-async function querySpeckleObjects(streamurl : string = 'http://dpa'){
+async function querySpeckleObjects(streamurl : string){
   if(String(streamurl)==""){return []}
   let stream_parts = String(streamurl).split("/",5);
   let b_url =stream_parts[0]+"//"+stream_parts[2] 
@@ -47,9 +47,9 @@ async function querySpeckleObjects(streamurl : string = 'http://dpa'){
   return objurls
 }
 
-export async function addSpeckleStream(){
+export async function addSpeckleStream(commit_url = eg_stream){
 
-  let commit_url = prompt("Please enter speckle commit url", eg_stream)
+  commit_url = prompt("Please enter speckle commit url", eg_stream)
   if(commit_url == null){
     console.log("Cancelled")
     return 0
@@ -82,6 +82,7 @@ export async function addSpeckleStream(){
     try{
       await convertSpeckleObject(c_opt["objectUrl"]);
     }catch(err){
+	  await convertSpeckleObject(c_opt["objectUrl"]);
       console.log(err);
     }
   }
@@ -96,6 +97,7 @@ export async function convertSpeckleObject(objectUrl : string = eg_url,
   await loader.load();
   loader.tree.getRenderTree().buildRenderTree();
   const batcher = new Batcher(100000, true);
+  try{
   await batcher.makeBatches(loader.tree.getRenderTree(), SpeckleTypeAllRenderables);
   Object.values(batcher.batches).forEach( (b : any) => {
     console.log(b)
@@ -109,6 +111,7 @@ export async function convertSpeckleObject(objectUrl : string = eg_url,
       //viewport().scene.add(b.renderObject); // Somehow this doesn't work and requires speckle's renderer
     }
   });
+  }catch(err){}
   console.log(viewport().scene);
   console.log("Done");
 }

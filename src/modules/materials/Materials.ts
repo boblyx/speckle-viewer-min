@@ -254,7 +254,7 @@ export default class Materials {
         roughness: 1,
         metalness: 0,
         side: DoubleSide // TBD,
-        // clippingPlanes: []
+        //clippingPlanes: []
       },
       ['USE_RTE']
     )
@@ -790,7 +790,11 @@ export default class Materials {
     /** There's a bug in three.js where it checks for the length of the planes without checking if they exist first
      *  It's been allegedly fixed in a later version but until we update we'll just assing an empty array
      */
-    mat.clippingPlanes = []
+	try{
+		mat.clippingPlanes = []
+	}catch(err){
+		console.log(err);
+	}
 
     return mat
   }
