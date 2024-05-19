@@ -1,3 +1,8 @@
+# Minimal Speckle Viewer
+- Experiment with Speckle Viewer without all the Speckle baggage.
+- Currently WIP for some Speckle Viewer features.
+- Supports loading of streams / projects.
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
