@@ -16,8 +16,8 @@ import {
   Scene,
   Sphere,
   Spherical,
-  sRGBEncoding,
   Texture,
+  SRGBColorSpace,
   Vector3,
   VSMShadowMap,
   WebGLRenderer
@@ -53,7 +53,7 @@ import {
   RenderType
 } from './pipeline/Pipeline'
 
-import { MeshBVHVisualizer } from 'three-mesh-bvh'
+import { MeshBVHHelper } from 'three-mesh-bvh'
 import MeshBatch from './batching/MeshBatch'
 //import { PlaneId, SectionBoxOutlines } from './SectionBoxOutlines'
 import { Shadowcatcher } from './Shadowcatcher'
@@ -227,7 +227,7 @@ export default class SpeckleRenderer {
     })
     this._renderer.setClearColor(0xffffff, 0)
     this._renderer.setPixelRatio(window.devicePixelRatio)
-    this._renderer.outputEncoding = sRGBEncoding
+    this._renderer.outputColorSpace = SRGBColorSpace;
     this._renderer.toneMapping = ACESFilmicToneMapping
     this._renderer.toneMappingExposure = 0.5
     this.renderer.shadowMap.enabled = true
@@ -600,7 +600,7 @@ export default class SpeckleRenderer {
       )
 
       if (this.SHOW_BVH) {
-        const bvhHelper: MeshBVHVisualizer = new MeshBVHVisualizer(
+        const bvhHelper: MeshBVHHelper = new MeshBVHHelper(
           batchRenderable as Mesh,
           10
         )

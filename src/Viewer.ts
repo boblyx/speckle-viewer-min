@@ -77,11 +77,11 @@ export class Viewer {
   public sunTarget : any
 
   private addDirectLights(){
-      const amb = new THREE.AmbientLight(0xffffff, 3.5);
+      const amb = new THREE.AmbientLight(0xffffff, 1);
       this.scene.add(amb);
       //this.scene.add(light);
 
-      this.sun = new THREE.DirectionalLight(0xffffff, 100)
+      this.sun = new THREE.DirectionalLight(0xffffff, 10)
       this.sun.name = 'sun'
       //this.sun.layers.set(ObjectLayers.STREAM_CONTENT)
       this.scene.add(this.sun)

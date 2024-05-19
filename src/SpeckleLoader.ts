@@ -7,8 +7,8 @@ import { viewport } from "./App";
 import {Viewer} from "./Viewer";
 import * as THREE from "three";
 
-const eg_url = 'http://dpa-compute1.dpa.com.sg/streams/50bb061b20/objects/1507654f33b5d01c526e64f9eea93856';
-const eg_stream = 'http://dpa-compute1.dpa.com.sg/streams/50bb061b20/commits/f507b65802';
+const eg_url = 'http://<SPECKLE>/streams/50bb061b20/objects/1507654f33b5d01c526e64f9eea93856';
+const eg_stream = 'http://<SPECKLE>/streams/50bb061b20/commits/f507b65802';
 
 async function querySpeckleObjects(streamurl : string){
   if(String(streamurl)==""){return []}
@@ -17,6 +17,7 @@ async function querySpeckleObjects(streamurl : string){
   let url = b_url+"/"+"graphql";
   let stream_id = stream_parts[stream_parts.length-1];
   let _query="query{stream(id: \""+stream_id+"\"){branch(name:\"main\"){commits{items{referencedObject}}}}}";
+  console.log(_query);
 
   let jsonq = 
   {
@@ -48,7 +49,6 @@ async function querySpeckleObjects(streamurl : string){
 }
 
 export async function addSpeckleStream(commit_url = eg_stream){
-
   commit_url = prompt("Please enter speckle commit url", eg_stream)
   if(commit_url == null){
     console.log("Cancelled")
@@ -82,7 +82,7 @@ export async function addSpeckleStream(commit_url = eg_stream){
     try{
       await convertSpeckleObject(c_opt["objectUrl"]);
     }catch(err){
-	  await convertSpeckleObject(c_opt["objectUrl"]);
+      await convertSpeckleObject(c_opt["objectUrl"]);
       console.log(err);
     }
   }
@@ -111,7 +111,9 @@ export async function convertSpeckleObject(objectUrl : string = eg_url,
       //viewport().scene.add(b.renderObject); // Somehow this doesn't work and requires speckle's renderer
     }
   });
-  }catch(err){}
+  }catch(err){
+    console.log(err);
+  }
   console.log(viewport().scene);
   console.log("Done");
 }

@@ -680,10 +680,10 @@ export default class MeshBatch implements Batch {
       maxVertexIndex = Math.max(maxVertexIndex, vIndex)
       data[vIndex] = value
     }
-    this.gradientIndexBuffer.updateRange = {
-      offset: minVertexIndex,
-      count: maxVertexIndex - minVertexIndex + 1
-    }
+    this.gradientIndexBuffer.addUpdateRange(
+      minVertexIndex,
+     maxVertexIndex - minVertexIndex + 1
+    )
     this.gradientIndexBuffer.needsUpdate = true
     this.geometry.attributes['gradientIndex'].needsUpdate = true
     return {
@@ -693,11 +693,10 @@ export default class MeshBatch implements Batch {
   }
 
   private updateGradientIndexBuffer(rangeMin?: number, rangeMax?: number) {
-    this.gradientIndexBuffer.updateRange = {
-      offset: rangeMin !== undefined ? rangeMin : 0,
-      count:
-        rangeMin !== undefined && rangeMax !== undefined ? rangeMax - rangeMin + 1 : -1
-    }
+    this.gradientIndexBuffer.addUpdateRange(
+      rangeMin !== undefined ? rangeMin : 0,
+      rangeMin !== undefined && rangeMax !== undefined ? rangeMax - rangeMin + 1 : -1
+    )
     this.gradientIndexBuffer.needsUpdate = true
     this.geometry.attributes['gradientIndex'].needsUpdate = true
   }
